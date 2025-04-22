@@ -1,0 +1,62 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    <Frame name="GinnyFrame" parent="UIParent" hidden="false" movable="true" enableMouse="false">
+        <Size>
+            <AbsDimension x="256" y="256" />
+        </Size>
+        <Anchors>
+            <Anchor point="TOP" />
+        </Anchors>
+        <Layers>
+            <!-- Image Layer -->
+            <Layer level="ARTWORK">
+                <Texture name="GinnyImage" file="Interface/AddOns/AngryRaidLeader/Ginny.png">
+                    <Size>
+                        <AbsDimension x="128" y="128" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOP" relativePoint="TOP" />
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <!-- Text Layer -->
+            <Layer level="OVERLAY">
+                <FontString name="GinnyText" inherits="GameFontNormal" text="Ginny hates u RN!!!!!" font="Fonts\FRIZQT__.TTF">
+                    <FontHeight val="40"/>
+                    <Anchors>
+                        <Anchor point="TOP" relativeTo="GinnyImage" relativePoint="BOTTOM" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+       </Layers>
+    </Frame>
+    <Frame name="RottenFrame" parent="UIParent" hidden="false" movable="true" enableMouse="false">
+        <Size>
+            <AbsDimension x="256" y="256" />
+        </Size>
+        <Anchors>
+            <Anchor point="TOP" />
+        </Anchors>
+        <Layers>
+            <!-- Image Layer -->
+            <Layer level="ARTWORK">
+                <Texture name="RottenImage" file="Interface/AddOns/AngryRaidLeader/Rotten.png">
+                    <Size>
+                        <AbsDimension x="128" y="198" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOP" relativePoint="TOP" />
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <!-- Text Layer -->
+            <Layer level="OVERLAY">
+                <FontString name="RottenText" inherits="GameFontNormal" text="Rotten hates u RN!!!!!" font="Fonts\FRIZQT__.TTF">
+                    <FontHeight val="40"/>
+                    <Anchors>
+                        <Anchor point="TOP" relativeTo="RottenImage" relativePoint="BOTTOM" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+    </Frame>
+</Ui>

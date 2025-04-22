@@ -1,0 +1,20 @@
+#!/bin/bash
+
+GAME_FOLDER=$1
+WOW_ROOT_PATH=$2
+
+if [ -z "$GAME_FOLDER" ]; then
+  echo "Provide game folder as first arg"
+  exit 1
+fi
+
+if [ -z "$WOW_ROOT_PATH" ]; then
+  WOW_ROOT_PATH="/mnt/c/World of Warcraft"
+fi
+
+echo "Game folder: $GAME_FOLDER"
+echo "WoW root path: $WOW_ROOT_PATH"
+
+rm -rf "$WOW_ROOT_PATH/$GAME_FOLDER/Interface/Addons/AngryRaidLeader"
+./scripts/package AngryRaidLeaderTest.0.4.zip
+./scripts/installFromZip AngryRaidLeaderTest.0.4.zip "$GAME_FOLDER" "$WOW_ROOT_PATH"

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+./scripts/packageAndInstall "_retail_" "/Applications/World of Warcraft"

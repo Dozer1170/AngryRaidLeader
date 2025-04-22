@@ -1,0 +1,8 @@
+#!/bin/bash
+
+OUT_FILE=$1
+
+rm $OUT_FILE
+cd src
+zip -r ../$OUT_FILE AngryRaidLeader -x "*.DS_Store"
+cd ..
