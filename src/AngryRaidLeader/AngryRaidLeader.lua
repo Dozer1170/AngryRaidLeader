@@ -7,14 +7,19 @@ local classBuffs = {
 	["WARRIOR"] = "Battle Shout",
 }
 
-local function IsInSameInstance(unit)
+local function IsInSameInstanceAndInRange(unit)
 	if not UnitExists(unit) then
 		return false
 	end
 
 	-- Check if the unit is in the same instance
 	local phaseReason = UnitPhaseReason(unit)
-	return phaseReason == nil -- `nil` means the unit is in the same instance
+	if phaseReason then
+		return false
+	end
+
+	-- Check if user is in range
+	return UnitInRange(unit)
 end
 
 local function IsBuffMissing(unit, buffName)
@@ -22,17 +27,26 @@ local function IsBuffMissing(unit, buffName)
 	return name == nil
 end
 
-local function IsBuffMissingFromRaid(buffName)
+local function IsBuffMissingFromPartyOrRaid(buffName)
 	if IsBuffMissing("player", buffName) then
 		return true, "player"
+	end
+
+	for i = 1, 5 do
+		local unit = "party" .. i
+		if not UnitIsDeadOrGhost(unit) and IsInSameInstanceAndInRange(unit) then
+			if IsBuffMissing(unit, buffName) then
+				return true, unit
+			end
+		end
 	end
 
 	local numRaidMembers = GetNumGroupMembers()
 	for i = 1, numRaidMembers do
 		local unit = "raid" .. i
-		if not UnitIsDeadOrGhost(unit) and IsInSameInstance(unit) then
+		if not UnitIsDeadOrGhost(unit) and IsInSameInstanceAndInRange(unit) then
 			if IsBuffMissing(unit, buffName) then
-				return true, unit
+				return true
 			end
 		end
 	end
@@ -46,7 +60,7 @@ local function CheckForRaidBuffs()
 		return
 	end
 
-	local missing, _ = IsBuffMissingFromRaid(buffName) -- Assuming you have this function
+	local missing, _ = IsBuffMissingFromPartyOrRaid(buffName) -- Assuming you have this function
 	return missing
 end
 
