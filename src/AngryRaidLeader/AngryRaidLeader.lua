@@ -1,3 +1,5 @@
+AngryRaidLeader = {}
+
 local classBuffs = {
 	["PRIEST"] = "Power Word: Fortitude",
 	["MAGE"] = "Arcane Intellect",
@@ -159,10 +161,15 @@ local function IsPlayerMissingGem()
 	return false
 end
 
+local shouldIgnoreRotten = false
+function AngryRaidLeader:IgnoreRotten()
+	shouldIgnoreRotten = true
+	print("The angry raid leader is very disappointed in you...")
+end
+
 local updateFrame = CreateFrame("frame")
 local interval = 3 -- Time in seconds
 local nextUpdateTime = 0
-GinnyFrame:Hide()
 
 updateFrame:SetScript("OnUpdate", function(_, _)
 	local currentTime = GetTime()
@@ -191,7 +198,7 @@ updateFrame:SetScript("OnUpdate", function(_, _)
 
 		local isMissingEnchant = IsPlayerMissingEnchant()
 		local isMissingGem = IsPlayerMissingGem()
-		if isMissingEnchant or isMissingGem then
+		if (isMissingEnchant or isMissingGem) and not shouldIgnoreRotten then
 			RottenFrame:Show()
 			if isMissingEnchant then
 				RottenText:SetText("Missing Enchant")

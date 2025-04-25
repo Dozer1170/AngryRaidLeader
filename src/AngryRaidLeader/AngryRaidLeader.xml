@@ -58,5 +58,24 @@
                 </FontString>
             </Layer>
         </Layers>
+        <Frames>
+          <Button name="IgnoreRottenButton" inherits="UIPanelButtonTemplate" text="Ignore until reload">
+              <Size>
+                  <AbsDimension x="120" y="30"/>
+              </Size>
+              <Anchors>
+                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RottenText">
+                    <Offset>
+                      <AbsDimension y="-5"/>
+                    </Offset>
+                  </Anchor>
+              </Anchors>
+              <Scripts>
+                  <OnClick>
+                    AngryRaidLeader:IgnoreRotten()
+                  </OnClick>
+              </Scripts>
+          </Button>
+        </Frames>
     </Frame>
 </Ui>
