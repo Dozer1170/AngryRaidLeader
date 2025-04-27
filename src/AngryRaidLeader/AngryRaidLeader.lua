@@ -14,7 +14,6 @@ local function IsOffHandWeapon()
 	local offHandItemID = GetInventoryItemID("player", 17) -- 17 is the off-hand slot
 
 	if not offHandItemID then
-		print("No item equipped in the off-hand slot.")
 		return false
 	end
 
