@@ -11,7 +11,7 @@ local classBuffs = {
 
 local function IsInRaidInstance()
 	local _, _, instanceType = GetInstanceInfo()
-	return instanceType == 15
+	return instanceType == 14 or instanceType == 15 or instanceType == 16
 end
 
 local function IsInSameInstanceAndInRange(unit)
@@ -184,6 +184,15 @@ local function IsMissingFlask()
 	return IsInRaidInstance()
 end
 
+local function IsMissingFoodBuff()
+	if not IsBuffMissing("player", "Well Fed") then
+		return false
+	end
+
+	-- Only say we are missing flask of none of the buffs are on and we are in a raid instance
+	return IsInRaidInstance()
+end
+
 local shouldIgnoreRotten = false
 function AngryRaidLeader:IgnoreRotten()
 	shouldIgnoreRotten = true
@@ -244,10 +253,17 @@ updateFrame:SetScript("OnUpdate", function(_, _)
 		end
 
 		local isMissingFlask = IsMissingFlask()
-		if isMissingFlask and not shouldIgnoreBeth then
+		local isMissingFoodBuff = IsMissingFoodBuff()
+		if (isMissingFlask or isMissingFoodBuff) and not shouldIgnoreBeth then
 			BethFrame:Show()
+			BethAngryImage:Hide()
+			BethHangryImage:Hide()
 			if isMissingFlask then
 				BethText:SetText("Missing Flask")
+				BethAngryImage:Show()
+			elseif isMissingFoodBuff then
+				BethText:SetText("Missing Food Buff")
+				BethHangryImage:Show()
 			else
 				BethText:SetText("You are okay.... for now")
 			end
