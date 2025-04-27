@@ -9,6 +9,11 @@ local classBuffs = {
 	["WARRIOR"] = "Battle Shout",
 }
 
+local function IsInRaidInstance()
+	local _, _, instanceType = GetInstanceInfo()
+	return instanceType == 15
+end
+
 local function IsInSameInstanceAndInRange(unit)
 	if not UnitExists(unit) then
 		return false
@@ -161,15 +166,42 @@ local function IsPlayerMissingGem()
 	return false
 end
 
+local function IsMissingFlask()
+	local flaskSpellNames = {
+		"Flask of Alchemical Chaos",
+		"Flask of Tempered Swiftness",
+		"Flask of Tempered Aggression",
+		"Flask of Tempered Versatility",
+		"Flask of Tempered Mastery",
+	}
+	for _, name in ipairs(flaskSpellNames) do
+		if not IsBuffMissing("player", name) then
+			return false
+		end
+	end
+
+	-- Only say we are missing flask of none of the buffs are on and we are in a raid instance
+	return IsInRaidInstance()
+end
+
 local shouldIgnoreRotten = false
 function AngryRaidLeader:IgnoreRotten()
 	shouldIgnoreRotten = true
 	print("The angry raid leader is very disappointed in you...")
 end
 
+local shouldIgnoreBeth = false
+function AngryRaidLeader:IgnoreBeth()
+	shouldIgnoreBeth = true
+	print("The angry raid leader is very disappointed in you and thinks your mog sucks...")
+end
+
 local updateFrame = CreateFrame("frame")
 local interval = 3 -- Time in seconds
 local nextUpdateTime = 0
+GinnyFrame:Hide()
+RottenFrame:Hide()
+BethFrame:Hide()
 
 updateFrame:SetScript("OnUpdate", function(_, _)
 	local currentTime = GetTime()
@@ -209,6 +241,18 @@ updateFrame:SetScript("OnUpdate", function(_, _)
 			end
 		else
 			RottenFrame:Hide()
+		end
+
+		local isMissingFlask = IsMissingFlask()
+		if isMissingFlask and not shouldIgnoreBeth then
+			BethFrame:Show()
+			if isMissingFlask then
+				BethText:SetText("Missing Flask")
+			else
+				BethText:SetText("You are okay.... for now")
+			end
+		else
+			BethFrame:Hide()
 		end
 	end
 end)

@@ -78,4 +78,53 @@
           </Button>
         </Frames>
     </Frame>
+    <Frame name="BethFrame" parent="UIParent" hidden="false" movable="true" enableMouse="false">
+        <Size>
+            <AbsDimension x="256" y="256" />
+        </Size>
+        <Anchors>
+            <Anchor point="TOP" />
+        </Anchors>
+        <Layers>
+            <!-- Image Layer -->
+            <Layer level="ARTWORK">
+                <Texture name="BethImage" file="Interface/AddOns/AngryRaidLeader/Beth.png">
+                    <Size>
+                        <AbsDimension x="128" y="192" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOP" relativePoint="TOP" />
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <!-- Text Layer -->
+            <Layer level="OVERLAY">
+                <FontString name="BethText" inherits="GameFontNormal" text="Beth hates u RN!!!!!" font="Fonts\FRIZQT__.TTF">
+                    <FontHeight val="40"/>
+                    <Anchors>
+                        <Anchor point="TOP" relativeTo="BethImage" relativePoint="BOTTOM" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+          <Button name="IgnoreBethButton" inherits="UIPanelButtonTemplate" text="Ignore until reload">
+              <Size>
+                  <AbsDimension x="120" y="30"/>
+              </Size>
+              <Anchors>
+                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="BethText">
+                    <Offset>
+                      <AbsDimension y="-5"/>
+                    </Offset>
+                  </Anchor>
+              </Anchors>
+              <Scripts>
+                  <OnClick>
+                    AngryRaidLeader:IgnoreBeth()
+                  </OnClick>
+              </Scripts>
+          </Button>
+        </Frames>
+    </Frame>
 </Ui>
