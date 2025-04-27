@@ -9,6 +9,26 @@ local classBuffs = {
 	["WARRIOR"] = "Battle Shout",
 }
 
+local function IsOffHandWeapon()
+	-- Get the item ID of the off-hand slot
+	local offHandItemID = GetInventoryItemID("player", 17) -- 17 is the off-hand slot
+
+	if not offHandItemID then
+		print("No item equipped in the off-hand slot.")
+		return false
+	end
+
+	-- Get item information
+	local _, _, _, _, _, itemType = GetItemInfo(offHandItemID)
+
+	-- Check if the item is a weapon
+	if itemType == "Weapon" then
+		return true
+	else
+		return false
+	end
+end
+
 local function IsInRaidInstance()
 	local _, _, instanceType = GetInstanceInfo()
 	return instanceType == 14 or instanceType == 15 or instanceType == 16
@@ -60,7 +80,7 @@ local function IsBuffMissingFromPartyOrRaid(buffName)
 	return false -- Buff is present on all raid members
 end
 
-local function CheckForRaidBuffs()
+local function DoesPlayerNeedToBuff()
 	local _, playerClass = UnitClass("player") -- Get the player's class
 	local buffName = classBuffs[playerClass] -- Get the buff for the player's class
 	if not buffName then
@@ -71,7 +91,7 @@ local function CheckForRaidBuffs()
 	return missing
 end
 
-local function CheckDurability()
+local function DoesPlayerNeedToRepair()
 	for slot = 1, 17 do -- Iterate through all equipment slots
 		local current, maximum = GetInventoryItemDurability(slot)
 		if current and maximum then
@@ -98,7 +118,7 @@ local function GetEnchantId(itemLink)
 	return fields[2] or nil
 end
 
-local function IsPlayerMissingEnchant()
+local function IsMissingEnchant()
 	if UnitLevel("player") < GetMaxPlayerLevel() then
 		return false -- No gem check for players below level 10
 	end
@@ -113,6 +133,17 @@ local function IsPlayerMissingEnchant()
 			end
 		end
 	end
+
+	if IsOffHandWeapon() then
+		local itemLink = GetInventoryItemLink("player", 17) -- 17 is the off-hand slot
+		if itemLink then
+			-- Check for missing enchants
+			if GetEnchantId(itemLink) == "" then
+				return true
+			end
+		end
+	end
+
 	return false
 end
 
@@ -139,7 +170,7 @@ local function GetGemIDsFromItemLink(itemLink)
 	return { gemId1, gemId2, gemId3, gemId4 }
 end
 
-local function IsPlayerMissingGem()
+local function IsMissingGem()
 	if UnitLevel("player") < GetMaxPlayerLevel() then
 		return false -- No gem check for players below level 10
 	end
@@ -193,6 +224,23 @@ local function IsMissingFoodBuff()
 	return IsInRaidInstance()
 end
 
+local function IsWeaponMissingOil()
+	-- Get temporary enchant info
+	local hasMainHandEnchant, _, _, _, hasOffHandEnchant = GetWeaponEnchantInfo()
+	local doesOffHandNeedEnchant = IsOffHandWeapon() and not hasOffHandEnchant
+	if hasMainHandEnchant and not doesOffHandNeedEnchant then
+		return false
+	end
+
+	return IsInRaidInstance() -- Only check for oil in raid instances
+end
+
+local function SetFrameAnchor(frame, anchorPoint, relativeTo, relativePoint, offsetX, offsetY)
+	-- Set the anchor for the frame
+	frame:ClearAllPoints() -- Clear any existing anchors
+	frame:SetPoint(anchorPoint, relativeTo, relativePoint, offsetX, offsetY)
+end
+
 local shouldIgnoreRotten = false
 function AngryRaidLeader:IgnoreRotten()
 	shouldIgnoreRotten = true
@@ -219,11 +267,13 @@ updateFrame:SetScript("OnUpdate", function(_, _)
 
 		if UnitIsDeadOrGhost("player") then
 			GinnyFrame:Hide()
+			RottenFrame:Hide()
+			BethFrame:Hide()
 			return
 		end
 
-		local needsToBuff = CheckForRaidBuffs()
-		local needsToRepair = CheckDurability()
+		local needsToBuff = DoesPlayerNeedToBuff()
+		local needsToRepair = DoesPlayerNeedToRepair()
 		if needsToBuff or needsToRepair then
 			GinnyFrame:Show()
 			if needsToBuff then
@@ -237,8 +287,8 @@ updateFrame:SetScript("OnUpdate", function(_, _)
 			GinnyFrame:Hide()
 		end
 
-		local isMissingEnchant = IsPlayerMissingEnchant()
-		local isMissingGem = IsPlayerMissingGem()
+		local isMissingEnchant = IsMissingEnchant()
+		local isMissingGem = IsMissingGem()
 		if (isMissingEnchant or isMissingGem) and not shouldIgnoreRotten then
 			RottenFrame:Show()
 			if isMissingEnchant then
@@ -254,16 +304,24 @@ updateFrame:SetScript("OnUpdate", function(_, _)
 
 		local isMissingFlask = IsMissingFlask()
 		local isMissingFoodBuff = IsMissingFoodBuff()
-		if (isMissingFlask or isMissingFoodBuff) and not shouldIgnoreBeth then
+		local isWeaponMissingOil = IsWeaponMissingOil()
+		if (isMissingFlask or isMissingFoodBuff or isWeaponMissingOil) and not shouldIgnoreBeth then
 			BethFrame:Show()
 			BethAngryImage:Hide()
 			BethHangryImage:Hide()
+			BethSadImage:Hide()
 			if isMissingFlask then
 				BethText:SetText("Missing Flask")
+				SetFrameAnchor(BethText, "TOP", BethAngryImage, "BOTTOM", 0, 0)
 				BethAngryImage:Show()
 			elseif isMissingFoodBuff then
 				BethText:SetText("Missing Food Buff")
+				SetFrameAnchor(BethText, "TOP", BethHangryImage, "BOTTOM", 0, 0)
 				BethHangryImage:Show()
+			elseif isWeaponMissingOil then
+				BethText:SetText("Missing Weapon Oil")
+				SetFrameAnchor(BethText, "TOP", BethSadImage, "BOTTOM", 0, 0)
+				BethSadImage:Show()
 			else
 				BethText:SetText("You are okay.... for now")
 			end

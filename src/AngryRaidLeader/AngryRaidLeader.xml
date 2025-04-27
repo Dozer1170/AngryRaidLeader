@@ -98,7 +98,15 @@
                 </Texture>
                 <Texture name="BethHangryImage" file="Interface/AddOns/AngryRaidLeader/BethHangry.png">
                     <Size>
-                        <AbsDimension x="128" y="192" />
+                        <AbsDimension x="128" y="163" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOP" relativePoint="TOP" />
+                    </Anchors>
+                </Texture>
+                <Texture name="BethSadImage" file="Interface/AddOns/AngryRaidLeader/BethSad.png">
+                    <Size>
+                        <AbsDimension x="128" y="161" />
                     </Size>
                     <Anchors>
                         <Anchor point="TOP" relativePoint="TOP" />
