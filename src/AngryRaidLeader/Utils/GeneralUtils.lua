@@ -49,3 +49,7 @@ function DoesPlayerNeedToRepair()
 	end
 	return false -- All items are above 40% durability
 end
+
+function IsPlayerInCombat()
+	return UnitAffectingCombat("player")
+end

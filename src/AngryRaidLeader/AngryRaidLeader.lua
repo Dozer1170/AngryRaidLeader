@@ -1,5 +1,11 @@
 AngryRaidLeader = {}
 
+local shouldIgnoreGinny = false
+function AngryRaidLeader:IgnoreGinny()
+	shouldIgnoreGinny = true
+	print("The angry raid leader is very disappointed in you...")
+end
+
 local shouldIgnoreRotten = false
 function AngryRaidLeader:IgnoreRotten()
 	shouldIgnoreRotten = true
@@ -33,7 +39,7 @@ updateFrame:SetScript("OnUpdate", function(_, _)
 
 		local needsToBuff = DoesPlayerNeedToBuff()
 		local needsToRepair = DoesPlayerNeedToRepair()
-		if needsToBuff or needsToRepair then
+		if (needsToBuff or needsToRepair) and not shouldIgnoreGinny then
 			GinnyFrame:Show()
 			if needsToBuff then
 				GinnyText:SetText("Missing Buff")
@@ -48,7 +54,7 @@ updateFrame:SetScript("OnUpdate", function(_, _)
 
 		local isMissingEnchant = IsPlayerMissingEnchant()
 		local isMissingGem = IsPlayerMissingGem()
-		if (isMissingEnchant or isMissingGem) and not shouldIgnoreRotten then
+		if (isMissingEnchant or isMissingGem) and not shouldIgnoreRotten and not IsPlayerInCombat() then
 			RottenFrame:Show()
 			if isMissingEnchant then
 				RottenText:SetText("Missing Enchant")
@@ -64,7 +70,11 @@ updateFrame:SetScript("OnUpdate", function(_, _)
 		local isMissingFlask = IsPlayerMissingFlask()
 		local isMissingFoodBuff = IsPlayerMissingFoodBuff()
 		local isWeaponMissingOil = IsPlayerMissingWeaponOil()
-		if (isMissingFlask or isMissingFoodBuff or isWeaponMissingOil) and not shouldIgnoreBeth then
+		if
+			(isMissingFlask or isMissingFoodBuff or isWeaponMissingOil)
+			and not shouldIgnoreBeth
+			and not IsPlayerInCombat()
+		then
 			BethFrame:Show()
 			BethAngryImage:Hide()
 			BethHangryImage:Hide()

@@ -27,7 +27,26 @@
                     </Anchors>
                 </FontString>
             </Layer>
-       </Layers>
+        </Layers>
+        <Frames>
+          <Button name="IgnoreGinnyButton" inherits="UIPanelButtonTemplate" text="Ignore until reload">
+              <Size>
+                  <AbsDimension x="120" y="30"/>
+              </Size>
+              <Anchors>
+                  <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GinnyText">
+                    <Offset>
+                      <AbsDimension y="-5"/>
+                    </Offset>
+                  </Anchor>
+              </Anchors>
+              <Scripts>
+                  <OnClick>
+                    AngryRaidLeader:IgnoreGinny()
+                  </OnClick>
+              </Scripts>
+          </Button>
+        </Frames>
     </Frame>
     <Frame name="RottenFrame" parent="UIParent" hidden="false" movable="true" enableMouse="false">
         <Size>
