@@ -48,6 +48,9 @@ updateFrame:SetScript("OnUpdate", function(_, _)
 			else
 				GinnyText:SetText("You are okay.... for now")
 			end
+			RottenFrame:Hide()
+			BethFrame:Hide()
+			return
 		else
 			GinnyFrame:Hide()
 		end
@@ -63,6 +66,9 @@ updateFrame:SetScript("OnUpdate", function(_, _)
 			else
 				RottenText:SetText("You are okay.... for now")
 			end
+			RottenFrame:Hide()
+			BethFrame:Hide()
+			return
 		else
 			RottenFrame:Hide()
 		end

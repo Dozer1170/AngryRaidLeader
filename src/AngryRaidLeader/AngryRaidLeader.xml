@@ -11,7 +11,7 @@
             <Layer level="ARTWORK">
                 <Texture name="GinnyImage" file="Interface/AddOns/AngryRaidLeader/Ginny.png">
                     <Size>
-                        <AbsDimension x="128" y="128" />
+                        <AbsDimension x="64" y="64" />
                     </Size>
                     <Anchors>
                         <Anchor point="TOP" relativePoint="TOP" />
@@ -21,7 +21,7 @@
             <!-- Text Layer -->
             <Layer level="OVERLAY">
                 <FontString name="GinnyText" inherits="GameFontNormal" text="Ginny hates u RN!!!!!" font="Fonts\FRIZQT__.TTF">
-                    <FontHeight val="40"/>
+                    <FontHeight val="20"/>
                     <Anchors>
                         <Anchor point="TOP" relativeTo="GinnyImage" relativePoint="BOTTOM" />
                     </Anchors>
@@ -60,7 +60,7 @@
             <Layer level="ARTWORK">
                 <Texture name="RottenImage" file="Interface/AddOns/AngryRaidLeader/Rotten.png">
                     <Size>
-                        <AbsDimension x="128" y="192" />
+                        <AbsDimension x="64" y="96" />
                     </Size>
                     <Anchors>
                         <Anchor point="TOP" relativePoint="TOP" />
@@ -70,7 +70,7 @@
             <!-- Text Layer -->
             <Layer level="OVERLAY">
                 <FontString name="RottenText" inherits="GameFontNormal" text="Rotten hates u RN!!!!!" font="Fonts\FRIZQT__.TTF">
-                    <FontHeight val="40"/>
+                    <FontHeight val="20"/>
                     <Anchors>
                         <Anchor point="TOP" relativeTo="RottenImage" relativePoint="BOTTOM" />
                     </Anchors>
@@ -109,7 +109,7 @@
             <Layer level="ARTWORK">
                 <Texture name="BethAngryImage" file="Interface/AddOns/AngryRaidLeader/Beth.png">
                     <Size>
-                        <AbsDimension x="128" y="192" />
+                        <AbsDimension x="64" y="96" />
                     </Size>
                     <Anchors>
                         <Anchor point="TOP" relativePoint="TOP" />
@@ -117,7 +117,7 @@
                 </Texture>
                 <Texture name="BethHangryImage" file="Interface/AddOns/AngryRaidLeader/BethHangry.png">
                     <Size>
-                        <AbsDimension x="128" y="163" />
+                        <AbsDimension x="64" y="81" />
                     </Size>
                     <Anchors>
                         <Anchor point="TOP" relativePoint="TOP" />
@@ -125,7 +125,7 @@
                 </Texture>
                 <Texture name="BethSadImage" file="Interface/AddOns/AngryRaidLeader/BethSad.png">
                     <Size>
-                        <AbsDimension x="128" y="161" />
+                        <AbsDimension x="64" y="80" />
                     </Size>
                     <Anchors>
                         <Anchor point="TOP" relativePoint="TOP" />
@@ -135,7 +135,7 @@
             <!-- Text Layer -->
             <Layer level="OVERLAY">
                 <FontString name="BethText" inherits="GameFontNormal" text="Beth hates u RN!!!!!" font="Fonts\FRIZQT__.TTF">
-                    <FontHeight val="40"/>
+                    <FontHeight val="20"/>
                     <Anchors>
                         <Anchor point="TOP" relativeTo="BethAngryImage" relativePoint="BOTTOM" />
                     </Anchors>
