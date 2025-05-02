@@ -1,6 +1,6 @@
 ## Interface: 110105
 ## Title: Angry Raid Leader
-## Version: 1.4
+## Version: 1.5
 ## Author: Gartie
 ## Notes: Never forget to repair, raid buff, or enchant & gem again.
 ## SavedVariables:
