@@ -28,8 +28,12 @@ function IsPlayerMissingGemSlotsInJewelry()
 		if itemLink then
 			local stats = C_Item.GetItemStats(itemLink)
 			if stats then
-				local numSockets = stats["EMPTY_SOCKET_PRISMATIC"] or 0
-				if numSockets < 2 then
+				local singingSeaSockets = stats["EMPTY_SOCKET_SINGINGSEA"] or 0
+				local singingThunderSockets = stats["EMPTY_SOCKET_SINGINGTHUNDER"] or 0
+				local singingWindSockets = stats["EMPTY_SOCKET_SINGINGWIND"] or 0
+				local prismaticSockets = stats["EMPTY_SOCKET_PRISMATIC"] or 0
+				local totalSockets = singingSeaSockets + singingThunderSockets + singingWindSockets + prismaticSockets
+				if totalSockets < 2 then
 					return true
 				end
 			end
