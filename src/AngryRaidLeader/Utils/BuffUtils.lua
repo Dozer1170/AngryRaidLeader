@@ -56,6 +56,7 @@ function IsPlayerMissingFlask()
 		"Flask of Tempered Aggression",
 		"Flask of Tempered Versatility",
 		"Flask of Tempered Mastery",
+		"Flask of Saving Graces",
 	}
 	for _, name in ipairs(flaskSpellNames) do
 		if not IsBuffMissing("player", name) then
@@ -68,7 +69,7 @@ function IsPlayerMissingFlask()
 end
 
 function IsPlayerMissingFoodBuff()
-	if not IsBuffMissing("player", "Well Fed") then
+	if not IsBuffMissing("player", "Well Fed") or not IsBuffMissing("player", "Hearty Well Fed") then
 		return false
 	end
 
