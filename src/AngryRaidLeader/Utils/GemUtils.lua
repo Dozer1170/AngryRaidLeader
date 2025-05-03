@@ -21,6 +21,22 @@ function GetGemIDsFromItemLink(itemLink)
 	return { gemId1, gemId2, gemId3, gemId4 }
 end
 
+function IsPlayerMissingGemSlotsInJewelry()
+	local jewelerySlots = { 2, 11, 12 }
+	for _, slot in ipairs(jewelerySlots) do
+		local itemLink = GetInventoryItemLink("player", slot)
+		if itemLink then
+			local stats = C_Item.GetItemStats(itemLink)
+			if stats then
+				local numSockets = stats["EMPTY_SOCKET_PRISMATIC"] or 0
+				if numSockets < 2 then
+					return true
+				end
+			end
+		end
+	end
+end
+
 function IsPlayerMissingGem()
 	if UnitLevel("player") < GetMaxPlayerLevel() then
 		return false -- No gem check for players below max level

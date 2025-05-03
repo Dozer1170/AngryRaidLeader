@@ -57,16 +57,22 @@ updateFrame:SetScript("OnUpdate", function(_, _)
 
 		local isMissingEnchant = IsPlayerMissingEnchant()
 		local isMissingGem = IsPlayerMissingGem()
-		if (isMissingEnchant or isMissingGem) and not shouldIgnoreRotten and not IsPlayerInCombat() then
+		local isMissingGemSlotsInJewelry = IsPlayerMissingGemSlotsInJewelry()
+		if
+			(isMissingEnchant or isMissingGem or isMissingGemSlotsInJewelry)
+			and not shouldIgnoreRotten
+			and not IsPlayerInCombat()
+		then
 			RottenFrame:Show()
 			if isMissingEnchant then
 				RottenText:SetText("Missing Enchant")
+			elseif isMissingGemSlotsInJewelry then
+				RottenText:SetText("Missing Gem Slots in Jewelry\nUse a Jeweler's Setting")
 			elseif isMissingGem then
 				RottenText:SetText("Missing Gem")
 			else
 				RottenText:SetText("You are okay.... for now")
 			end
-			RottenFrame:Hide()
 			BethFrame:Hide()
 			return
 		else
