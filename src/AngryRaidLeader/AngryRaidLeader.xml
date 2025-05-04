@@ -60,7 +60,7 @@
             <Layer level="ARTWORK">
                 <Texture name="RottenImage" file="Interface/AddOns/AngryRaidLeader/Rotten.png">
                     <Size>
-                        <AbsDimension x="64" y="96" />
+                        <AbsDimension x="64" y="70" />
                     </Size>
                     <Anchors>
                         <Anchor point="TOP" relativePoint="TOP" />
