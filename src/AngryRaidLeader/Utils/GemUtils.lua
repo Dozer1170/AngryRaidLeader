@@ -22,6 +22,10 @@ function GetGemIDsFromItemLink(itemLink)
 end
 
 function IsPlayerMissingGemSlotsInJewelry()
+	if UnitLevel("player") < GetMaxPlayerLevel() then
+		return false -- No gem check for players below max level
+	end
+
 	local jewelerySlots = { 2, 11, 12 }
 	for _, slot in ipairs(jewelerySlots) do
 		local itemLink = GetInventoryItemLink("player", slot)

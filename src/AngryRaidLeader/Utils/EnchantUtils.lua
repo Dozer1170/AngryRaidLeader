@@ -14,7 +14,7 @@ end
 
 function IsPlayerMissingEnchant()
 	if UnitLevel("player") < GetMaxPlayerLevel() then
-		return false -- No gem check for players below level 10
+		return false -- No gem check for players below max level
 	end
 
 	local slotsToCheck = { 5, 9, 7, 8, 11, 12, 15, 16 } -- Chest, Bracers, Legs, Boots, Rings, Cloak, Weapon
